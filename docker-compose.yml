@@ -1,16 +1,16 @@
-
+db-server:
+  image: mysql
+  volumes_from:
+    - test-data-container
+  environment:
+    MYSQL_ROOT_PASSWORD: password
+    
 app:
   image: golang:1.8-onbuild
   volumes:
+    - "./vendor:/go/src/github.com"
     - ".:/go/src/app"
   links:
     - "db-server:mysql"
   command: go run cmd/main.go
 
-db-server:
-  image: mysql
-  volumes_from:
-    - kyuko-data
-  environment:
-    MYSQL_ROOT_PASSWORD: password
-  
