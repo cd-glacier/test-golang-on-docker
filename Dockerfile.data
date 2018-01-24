@@ -4,3 +4,4 @@ FROM busybox
 LABEL maintainer="g-hyoga<hyoga0216@gmail.com>"
 
 VOLUME /var/lib/mysql
+VOLUME /var/log/mysql

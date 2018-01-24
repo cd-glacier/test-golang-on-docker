@@ -3,10 +3,11 @@ db-server:
   volumes_from:
     - test-data-container
   volumes:
+    - "./mysql:/etc/mysql/conf.d"
     - "./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    - "./mysql/log:/var/log/mysql"
   environment:
     MYSQL_ROOT_PASSWORD: password
-  command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     
 app:
   image: golang:1.8-onbuild
