@@ -3,29 +3,35 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"g-hyoga/kyuko/go/model"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type User struct {
+	ID   int
+	Name string
+}
+
 func main() {
-	db, err := sql.Open("mysql", "root:password@/kyuko")
+	db, err := sql.Open("mysql", "root:password@tcp(localhost:3306)/test-db")
 	defer db.Close()
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
-	rows, err := db.Query("SELECT * FROM canceled_class")
+	rows, err := db.Query("SELECT * FROM test-table")
 	defer rows.Close()
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	canceledclasses := []model.CanceledClass{}
-	canceledclasses, err = model.ScanCanceledClass(rows)
-	if err != nil {
-		fmt.Println(err.Error)
+	for rows.Next() {
+		user := User{}
+		err = rows.Scan(&user)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(user)
 	}
 
-	fmt.Println(canceledclasses)
 }
