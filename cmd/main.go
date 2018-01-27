@@ -19,7 +19,7 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	rows, err := db.Query("SELECT * FROM test-table")
+	rows, err := db.Query("SELECT * FROM test_table")
 	defer rows.Close()
 	if err != nil {
 		fmt.Println(err)
