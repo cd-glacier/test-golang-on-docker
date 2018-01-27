@@ -13,7 +13,7 @@ type User struct {
 }
 
 func main() {
-	db, err := sql.Open("mysql", "root:password@tcp(localhost:3306)/test-db")
+	db, err := sql.Open("mysql", "root:password@tcp(db-server:3306)/test_db")
 	defer db.Close()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -27,7 +27,7 @@ func main() {
 
 	for rows.Next() {
 		user := User{}
-		err = rows.Scan(&user)
+		err = rows.Scan(&user.ID, &user.Name)
 		if err != nil {
 			fmt.Println(err)
 		}
