@@ -1,5 +1,6 @@
 今更ながらDockerの勉強をしています。
-色々わからないところが多く、詰まったりしたところが多かったので自分はこのようにしたというのを書きます。
+色々わからないところが多く、詰まったりしたところが多かったので自分はこのようにしたというのをまとめて見ます。output大事かなって思ったので
+
 他にやり方があるよとかあれば、教えていただけると嬉しいです。
 
 一応Dockerとか関係なく、
@@ -266,3 +267,80 @@ dep init
    |--log
    |--my.cnf
 ```
+
+# docker-compose.ymlをかく
+
+ここからが本番です。
+実際にmysqlのコンテナとgoのコンテナを立ち上げ、
+動かします。
+
+先にdocker-compose.ymlが結局こうなったというのを示します。
+
+##### ./docker-compose.yml
+```yml
+version: '3.3'
+
+services:
+  db-server:
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - "data:/var/lib/mysql"
+      - "data:/var/log/mysql"
+      - "./mysql:/etc/mysql/conf.d"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+      - "./mysql/log:/var/log/mysql"
+    environment:
+      mysql_root_password: password
+      
+  app:
+    image: golang:1.8-onbuild
+    ports:
+      - "8080:8080"
+    volumes:
+      - ".src/vendor:/go/src/github.com"
+      - "./src:/go/src/app"
+    depends_on:
+      - db-server
+    command: go run cmd/main.go
+
+volumes:
+  data:
+```
+
+## data volume
+
+Dockerではコンテナを起動し、停止すると基本的にコンテナ内のデータは消えます。
+永続的なデータを扱いたい時はData用のVOLUMEを用意します。
+
+```yml
+volumes:
+  data:
+```
+
+これだけで用意してくれるようです.
+
+今回はmysqlのデータを永続化したいです。
+
+```
+services:
+  db-server:
+   volumes:
+      - "data:/var/lib/mysql"
+      - "data:/var/log/mysql"
+```
+
+このようにdb-serverのvolumesにmysqlのデータ保存先を追加します.
+今回はlogも永続化しておきます。
+
+
+
+
+
+
+
+
+
+
+
