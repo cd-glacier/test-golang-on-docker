@@ -9,7 +9,7 @@ services:
       - "data:/var/lib/mysql"
       - "data:/var/log/mysql"
       - "./mysql:/etc/mysql/conf.d"
-      - "./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
       - "./mysql/log:/var/log/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: password

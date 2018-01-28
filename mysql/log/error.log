@@ -607,3 +607,4 @@ Version: '5.7.20'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Comm
 2018-01-28T10:32:51.400496Z 0 [Note] End of list of non-natively partitioned tables
 2018-01-28T10:33:25.249308Z 3 [Note] Aborted connection 3 to db: 'test_db' user: 'root' host: '172.19.0.3' (Got an error reading communication packets)
 2018-01-28T10:34:15.128571Z 4 [Note] Aborted connection 4 to db: 'test_db' user: 'root' host: '172.19.0.3' (Got an error reading communication packets)
+2018-01-28T11:30:19.012582Z 0 [Note] InnoDB: page_cleaner: 1000ms intended loop took 91819ms. The settings might not be optimal. (flushed=0 and evicted=0, during the time.)
