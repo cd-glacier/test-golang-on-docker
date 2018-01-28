@@ -73,7 +73,7 @@ character-set-server=utf8
 
 ### mysqlの公式のコマンドを使う(試してない)
 
-見にくくなるの[こちら]()に書きました.
+見にくくなるの[こちら](https://github.com/g-hyoga/test-golang-on-docker/blob/master/blog/mysql-charaset.md)に書きました.
 
 
 
