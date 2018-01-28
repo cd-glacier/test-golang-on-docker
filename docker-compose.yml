@@ -15,9 +15,11 @@ services:
       
   app:
     image: golang:1.8-onbuild
+    ports:
+      - "8080:8080"
     volumes:
-      - "./vendor:/go/src/github.com"
-      - ".:/go/src/app"
+      - ".src/vendor:/go/src/github.com"
+      - "./src:/go/src/app"
     depends_on:
       - db-server
     command: go run cmd/main.go
