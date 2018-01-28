@@ -277,7 +277,7 @@ dep init
 先にdocker-compose.ymlが結局こうなったというのを示します。
 
 ##### ./docker-compose.yml
-```yml
+```yaml
 version: '3.3'
 
 services:
@@ -314,7 +314,7 @@ volumes:
 Dockerではコンテナを起動し、停止すると基本的にコンテナ内のデータは消えます。
 永続的なデータを扱いたい時はData用のVOLUMEを用意します。
 
-```yml
+```yaml
 volumes:
   data:
 ```
@@ -323,7 +323,7 @@ volumes:
 
 今回はmysqlのデータを永続化したいです。
 
-```
+```yaml
 services:
   db-server:
    volumes:
@@ -357,6 +357,8 @@ services:
 設定ファイルを置き換えたり、ローカルのディレクトリとコンテナのディレクトリをつなげたりできます。
 これによってmy.cnfは置き換えられ、mysqlで出力されたlogはローカルの./mysql/logでも確認できるようになります。
 
+あとは3306portを使用するので、あけておきます
+
 ## goの下準備を適用する
 
 mysqlと同じです。
@@ -382,5 +384,49 @@ docker-compose exec app bash
 とかで、直接コンテナ内でビルドできたりするのでbuild済みのものを使いました.
 (一回もしませんでしたが)
 
+あとはこちらも8080ポートを開けておきます
 
+## コンテナ同士の接続
+
+今回は, GoコンテナからMySQLコンテナに接続する必要があります。
+link(非推奨)というものを使うか、networkというものを使う方法があります.
+docker-composeのversion3を使うと、
+services以下に定義したコンテナ同士はデフォルトで、
+同じnetworkによしなに属してくれます。
+
+名前は,
+
+```yaml
+services:
+  app:  #ここ
+    ....
+  db-server:  #ここ
+    ....
+```
+
+のものが使われます。
+
+なので、片方のコンテナから(例えば、今だとappのコンテナから)
+
+```sh
+ping db-server
+```
+
+するとちゃんとpingが通ります.
+
+
+## 動かす
+
+一思いに,
+```sh
+docker-compose up
+```
+します。
+
+docker-compose.ymlにdepends_onと書いていると思うのですが、
+起動する順番が決まるだけで、mysqlが起動するまで待ってくれないようです。
+
+少し待ってから,
+[http://localhost:8080/ping](http://localhost:8080/ping)にアクセスすれば、
+mysqlから取得したデータが入ったjsonが返ってきているはずです.
 

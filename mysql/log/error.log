@@ -803,3 +803,4 @@ Version: '5.7.20'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Comm
 2018-01-28T12:20:14.830808Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
 2018-01-28T12:20:14.831017Z 0 [Note] Beginning of list of non-natively partitioned tables
 2018-01-28T12:20:14.935729Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-28T14:39:13.671759Z 0 [Note] InnoDB: page_cleaner: 1000ms intended loop took 6428810ms. The settings might not be optimal. (flushed=0 and evicted=0, during the time.)
