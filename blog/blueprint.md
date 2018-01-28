@@ -335,12 +335,26 @@ services:
 今回はlogも永続化しておきます。
 
 
+## mysqlの下準備を適用する
 
+前半に書いたmysqlの下準備を適用していきます。
+dockerのVolumeを用いて、コンテナ内の設定ファイルをローカルのものと置き換えます。
 
+```
+services:
+  db-server:
+   volumes:
+      - "./mysql:/etc/mysql/conf.d" #設定ファイルを置き換える
+      - "./mysql/init:/docker-entrypoint-initdb.d" #ローカルのinitとコンテナのdocker-entrypoint-initdb.dを繋げる
+      - "./mysql/log:/var/log/mysql" #ローカルの./mysql/logとコンテナと/var/log/mysqlを繋げる
+```
 
+```
+ローカルのパス:コンテナ内のパス
+```
+という風に書きます。
 
-
-
-
+設定ファイルを置き換えたり、ローカルのディレクトリとコンテナのディレクトリをつなげたりできます。
+これによってmy.cnfは置き換えられ、mysqlで出力されたlogはローカルの./mysql/logでも確認できるようになります。
 
 
