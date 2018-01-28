@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   db-server:
     image: mysql
@@ -20,9 +20,8 @@ services:
       - ".:/go/src/app"
     depends_on:
       - db-server
-    links:
-      - "db-server:mysql"
     command: go run cmd/main.go
 
 volumes:
   data:
+

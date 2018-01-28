@@ -34,4 +34,8 @@ func main() {
 		fmt.Println(user)
 	}
 
+	for {
+
+	}
+
 }
