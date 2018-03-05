@@ -15,7 +15,14 @@ type User struct {
 
 func main() {
 	r := gin.Default()
+
 	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+
+	r.GET("/ping-db", func(c *gin.Context) {
 		db, err := sql.Open("mysql", "root:password@tcp(db-server:3306)/test_db")
 		defer db.Close()
 		if err != nil {
